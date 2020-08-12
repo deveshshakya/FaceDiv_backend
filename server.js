@@ -12,10 +12,10 @@ const image = require('./endpoints/image');
 const database = knex({
     client: 'pg',
     connection: {
-        host: '127.0.0.1',
-        user: 'dshakya29',
-        password: 'google',
-        database: 'facediv'
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
     }
 });
 

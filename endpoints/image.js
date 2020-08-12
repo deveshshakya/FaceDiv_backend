@@ -10,8 +10,7 @@ const handleAPICall = (req, res) => {
         .then(data => {
             res.json(data);
         })
-        // .catch(err => res.status(400).json('API doesn\'t respond.'))
-        .catch(err => res.status(400).json(err));
+        .catch(err => res.status(400).json('API doesn\'t respond.'))
 }
 
 const handleImage = (req, res, db) => {
