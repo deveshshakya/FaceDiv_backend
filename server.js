@@ -1,36 +1,53 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
+const bcrypt = require('bcrypt-nodejs');
 
-const register = require('./controllers/register');
-const signin = require('./controllers/signin');
-const profile = require('./controllers/profile');
-const image = require('./controllers/image');
+const register = require('./endpoints/register');
+const signIn = require('./endpoints/signIn');
+const profile = require('./endpoints/profile');
+const image = require('./endpoints/image');
 
-const db = knex({
-  client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    user : 'devesh',
-    password : '',
-    database : 'facediv'
-  }
+const database = knex({
+    client: 'pg',
+    connection: {
+        host: '127.0.0.1',
+        user: 'dshakya29',
+        password: 'google',
+        database: 'facediv'
+    }
 });
 
-const app = express();
+const API = express();
 
-app.use(cors())
-app.use(bodyParser.json());
+API.use(cors());
+API.use(bodyParser.json());
 
-app.get('/', (req, res)=> { res.send(db.users) })
-app.post('/signin', signin.handleSignin(db, bcrypt))
-app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
-app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
-app.put('/image', (req, res) => { image.handleImage(req, res, db)})
-app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
-
-app.listen(3000, ()=> {
-  console.log('Status 200');
+API.get('/', (req, res) => {
+    res.send('Not Allowed.');
 })
+
+API.post('/signin', (req, res) => {
+    signIn.handleSignIn(req, res, database, bcrypt)
+})
+
+API.post('/register', (req, res) => {
+    register.handleRegister(req, res, database, bcrypt)
+})
+
+API.get('/profile/:id', (req, res) => {
+    profile.handleProfileGet(req, res, database)
+})
+
+API.put('/image', (req, res) => {
+    image.handleImage(req, res, database)
+})
+
+API.post('/imageurl', (req, res) => {
+    image.handleAPICall(req, res)
+})
+
+API.listen(3000, res => {
+    console.log('200');
+});
