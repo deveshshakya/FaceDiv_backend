@@ -2,7 +2,7 @@
   "name": "facediv-backend",
   "version": "1.0.0",
   "description": "API for FaceDiv app.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
